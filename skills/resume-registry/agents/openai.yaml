@@ -1,4 +1,4 @@
 interface:
   display_name: "Resume Registry"
-  short_description: "Register private resume versions in Obsidian"
-  default_prompt: "Register this resume file in the configured private Obsidian vault, confirm its metadata, and link the confirmed version to the requested application."
+  short_description: "Register private resume files and versions"
+  default_prompt: "Register this uploaded resume in the configured private Obsidian vault, confirm its version metadata, preserve the original file, and make it available for linking to applications."
