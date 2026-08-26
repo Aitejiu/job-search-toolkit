@@ -17,4 +17,13 @@ At runtime, configure the skills with a path to a private Obsidian vault or priv
 
 ## Validation
 
-Run `python3 -m unittest discover -s tests -v` for deterministic tests. Run the bundled skill validator against each skill directory before publishing.
+From the repository root, run:
+
+```bash
+python3 -m unittest discover -s tests -v
+python3 /path/to/quick_validate.py skills/job-tracker
+python3 /path/to/quick_validate.py skills/resume-registry
+python3 skills/job-tracker/scripts/update_index.py --vault tests/fixtures/vault
+```
+
+The validator path is supplied by the local Codex installation. The final command exercises the generated overview against synthetic data only.
