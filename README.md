@@ -1,0 +1,20 @@
+# Job Search Toolkit
+
+An open-source Codex skill toolkit for maintaining a job seeker's private Obsidian records.
+
+## Skills
+
+- `job-tracker`: capture application text or links, scan user-selected pages on demand, map source statuses, deduplicate applications, manage confirmations, and rebuild the overview.
+- `resume-registry`: register uploaded resume files as versioned private assets and link confirmed versions to applications.
+
+The repository will later host separate `interview-organizer` and `job-review` skills. They are not part of the first release.
+
+## Data Boundary
+
+The toolkit repository contains reusable instructions, templates, synthetic fixtures, and tests. It never contains a real resume, private Obsidian vault, application history, interview transcript, credential, browser session, or token.
+
+At runtime, configure the skills with a path to a private Obsidian vault or private data repository. The toolkit repository and the private data repository are versioned and published independently.
+
+## Validation
+
+Run `python3 -m unittest discover -s tests -v` for deterministic tests. Run the bundled skill validator against each skill directory before publishing.

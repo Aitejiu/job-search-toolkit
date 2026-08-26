@@ -1,0 +1,4 @@
+interface:
+  display_name: "Job Tracker"
+  short_description: "Capture and maintain private Obsidian job applications"
+  default_prompt: "Process this application text or link using the configured private Obsidian vault, confirm key fields, deduplicate by company, department, and position, and update the application timeline."

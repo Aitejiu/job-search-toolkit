@@ -1,0 +1,22 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.DS_Store
+
+# Private Obsidian vault and personal source material
+.obsidian/
+/求职/
+*.pdf
+*.doc
+*.docx
+*.rtf
+*.txt
+*.log
+
+# Local credentials and browser state
+.env
+.env.*
+*.cookie
+cookies.json
+tokens.json
