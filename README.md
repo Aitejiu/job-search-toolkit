@@ -6,6 +6,11 @@ An open-source Codex skill toolkit for maintaining a job seeker's private Obsidi
 
 - `job-tracker`: capture application text or links, scan user-selected pages on demand, map source statuses, deduplicate applications, manage confirmations, and rebuild the overview.
 - `resume-registry`: register uploaded resume files as versioned private assets and link confirmed versions to applications.
+- `resume-ats-optimizer`: audit ATS compatibility and job-description keyword coverage.
+- `resume-bullet-writer`: turn weak resume bullets into achievement-focused statements.
+- `tech-resume-optimizer`: improve resumes for software, product, and other technical roles.
+
+The three resume optimization skills above are imported from [Paramchoudhary/ResumeSkills](https://github.com/Paramchoudhary/ResumeSkills).
 
 The repository will later host separate `interview-organizer` and `job-review` skills. They are not part of the first release.
 

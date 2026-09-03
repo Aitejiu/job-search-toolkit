@@ -44,7 +44,16 @@ class PackageHygieneTests(unittest.TestCase):
             for path in (ROOT / "skills").iterdir()
             if path.is_dir() and not path.name.startswith("_")
         ]
-        self.assertEqual({path.name for path in skill_directories}, {"job-tracker", "resume-registry"})
+        self.assertEqual(
+            {path.name for path in skill_directories},
+            {
+                "job-tracker",
+                "resume-registry",
+                "resume-ats-optimizer",
+                "resume-bullet-writer",
+                "tech-resume-optimizer",
+            },
+        )
         for skill_directory in skill_directories:
             self.assertRegex(skill_directory.name, r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 
