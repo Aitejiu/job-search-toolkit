@@ -125,6 +125,8 @@ vault: /Users/你的用户名/obsidian/job-search
 
 扫描必须由用户主动触发，并指定来源和页面：
 
+涉及网页交互时，必须先读取并使用 `agent-browser` skill。优先复用用户当前已经登录并授权的浏览器会话，不要自行打开空白浏览器或另起未登录实例；如果现有会话不可用，应先报告访问问题，不要猜测页面状态。
+
 ```text
 请使用 ./skills/job-tracker/SKILL.md 扫描招聘页面。
 vault: /Users/你的用户名/obsidian/job-search
