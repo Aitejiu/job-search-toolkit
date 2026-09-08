@@ -231,6 +231,35 @@ vault: /Users/你的用户名/obsidian/job-search
 
 `feishu-job-sync` 的目标是飞书多维表格 Base，不是电子表格。Obsidian 是唯一事实源，飞书只是用于查看、筛选和统计的副本。
 
+### 直接用自然语言触发
+
+不需要自己拼接终端命令，可以在 Codex 中直接说：
+
+```text
+请使用 ./skills/feishu-job-sync/SKILL.md。
+我的 Obsidian vault 是：
+/Users/你的用户名/obsidian/job-search
+飞书同步配置是：
+/Users/你的用户名/obsidian/job-search/求职/配置/飞书同步.md
+
+请读取配置中的 Base 地址和数据表名，先预览当前 vault 中将要同步的投递记录，
+告诉我记录数、字段数、新增数和更新数，不要立即写入飞书。
+```
+
+确认预览后再说：
+
+```text
+预览无误，请将这些已确认投递同步到配置中的飞书多维表格。
+同步完成后回读记录总数，并确认没有重复的公司、部门、职位组合。
+```
+
+后续有新投递时可以直接说：
+
+```text
+请使用 ./skills/feishu-job-sync/SKILL.md，把最新的 Obsidian 投递记录增量同步到飞书 Base。
+先检查已有同步键，已有记录更新，新记录新增，不要删除历史记录。
+```
+
 ### 第一次使用：先预览
 
 ```bash
