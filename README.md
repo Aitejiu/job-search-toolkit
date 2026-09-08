@@ -6,20 +6,17 @@
 
 ## 先看这里
 
-从仓库根目录打开 Codex，并在请求中明确指定 skill：
+从仓库根目录打开 Codex。第一次使用时，把私有 vault 的位置告诉它；之后可以直接用自然语言描述要做的事：
 
 ```text
-请读取并使用 ./skills/job-tracker/SKILL.md。
-我的私有 Obsidian vault 是：
-/Users/你的用户名/obsidian/job-search
-
-请处理下面的投递信息。先展示抽取结果、去重结果和拟写入内容，
-等我确认后再修改 vault。
+我的投递记录放在 /Users/你的用户名/obsidian/job-search。
+我刚投了一个职位，帮我看看下面的信息，先别写入，等我确认后再记下来：
+<投递链接或文本>
 ```
 
 使用规则：
 
-1. 需要处理投递、简历或同步时，先指定对应的 `SKILL.md`。
+1. 需要处理投递、简历或同步时，让 Codex 使用对应的 skill；如果没有自动识别，在开头补一句“用 `job-tracker` 帮我处理”即可，不必贴完整路径。
 2. 涉及写入私有数据时，要求 skill 先给预览；没有确认就不写入。
 3. 仓库中的 skill、脚本和模板可以提交远程仓库；真实数据只能写入私有 vault。
 4. 需要浏览招聘网站时，只扫描用户明确指定的页面和来源，不保存密码、Cookie 或登录状态。
@@ -80,29 +77,26 @@ lark-cli auth status --json --verify
 
 ### 处理一个链接
 
-链接可能是公开职位详情页，也可能是登录后的投递状态页。两者不能混为一谈。使用下面的请求，让 skill 先识别页面类型并预览：
+链接可能是公开职位详情页，也可能是登录后的投递状态页。两者不能混为一谈。日常可以这样说：
 
 ```text
-请使用 ./skills/job-tracker/SKILL.md。
-vault: /Users/你的用户名/obsidian/job-search
-
-处理这个链接：
+我刚投了这个职位，帮我看看链接里能不能确认投递信息：
 https://example.invalid/application/123
 
-请先判断它是职位详情页还是投递状态页，抽取公司、部门、职位、原始状态、事件时间、来源和证据。
-按公司、部门、职位去重，只展示拟执行操作，不要写入。
+先帮我判断这是职位详情还是投递状态，看看公司、部门、职位和当前进度。
+如果和已有记录重复也标出来，但先不要写入。
 ```
 
-确认写入时逐条授权：
+看过结果后，确认某一条可以这样说：
 
 ```text
-确认第 1 条，按预览内容写入；其他记录不要处理。
+第 1 条没问题，记下来；其他先别动。
 ```
 
-如果要改字段，先明确修改后重新预览：
+如果要改字段，可以这样说：
 
 ```text
-把第 1 条的部门改为算法平台部，职位保持不变，重新展示预览。
+第 1 条的部门改成算法平台部，其他保持不变，改完给我看一眼。
 ```
 
 ### 粘贴投递文本
@@ -110,11 +104,8 @@ https://example.invalid/application/123
 适用于邮件、招聘系统通知和手动复制的页面文本：
 
 ```text
-请使用 ./skills/job-tracker/SKILL.md。
-vault: /Users/你的用户名/obsidian/job-search
-
-下面是投递结果文本。请拆分出每一条记录，保留原文证据，
-按公司、部门、职位去重，并逐条展示需要确认的字段；不要直接写入。
+这是我刚才投递后的页面文本，帮我看看里面有几条投递，重复的也标出来。
+先不要写入，等我确认后再记。
 
 <粘贴文本>
 ```
@@ -128,13 +119,11 @@ vault: /Users/你的用户名/obsidian/job-search
 涉及网页交互时，必须先读取并使用 `agent-browser` skill。优先复用用户当前已经登录并授权的浏览器会话，不要自行打开空白浏览器或另起未登录实例；如果现有会话不可用，应先报告访问问题，不要猜测页面状态。
 
 ```text
-请使用 ./skills/job-tracker/SKILL.md 扫描招聘页面。
-vault: /Users/你的用户名/obsidian/job-search
-来源: example-career-site
-页面: https://example.invalid/account/applications
+帮我看看这个招聘网站里的投递进度，直接用我现在登录的浏览器会话。
+把每条记录和状态变化列出来，先别急着改 Obsidian。
 
-使用我当前授权的浏览器会话，处理页面上的全部投递卡片。
-先展示扫描结果、状态映射和拟更新项，等待确认后再写入。
+来源：example-career-site
+页面：https://example.invalid/account/applications
 ```
 
 新招聘网站第一次出现时，先确认原始状态如何映射：
@@ -151,10 +140,7 @@ vault: /Users/你的用户名/obsidian/job-search
 ### 处理待确认项
 
 ```text
-请使用 ./skills/job-tracker/SKILL.md。
-vault: /Users/你的用户名/obsidian/job-search
-
-读取求职/收件箱/中的待确认项，逐条展示，不要批量写入。
+帮我看看收件箱里还有哪些待确认的投递，一条条列出来，我确认后再处理。
 ```
 
 可用决策包括：`确认`、`编辑`、`合并`、`拆分`、`忽略`、`重试`。只有明确确认后，pending item 才会变成正式投递记录。
@@ -172,15 +158,13 @@ python3 skills/job-tracker/scripts/update_index.py \
 
 ## 简历版本登记：resume-registry
 
-登记简历文件时使用：
+想登记一份简历时，可以直接说：
 
 ```text
-请使用 ./skills/resume-registry/SKILL.md。
-vault: /Users/你的用户名/obsidian/job-search
+我想把这份简历登记到求职知识库里：
+/Users/你的用户名/resume/resume-cn.pdf
 
-登记这份简历：/Users/你的用户名/resume/resume-cn.pdf
-请提取文件信息和文本摘要，计算内容 hash，展示拟使用的版本名、方向、日期、保存路径和重复候选。
-先不要写入，等我确认。
+先告诉我你识别到的版本信息、有没有重复，以及准备放在哪里，不要直接写。
 ```
 
 确认时需要明确：版本名、语言、更新时间、目标方向、私有存储路径，以及是否允许关联后续投递。原始文件不会被覆盖；相同 hash 的文件会先提示复用或创建新版本。
@@ -200,31 +184,26 @@ vault: /Users/你的用户名/obsidian/job-search
 ### ATS 检查
 
 ```text
-请使用 ./skills/resume-ats-optimizer/SKILL.md。
+帮我看一下这份简历过 ATS 有没有问题：
+/Users/你的用户名/resume/resume-cn.pdf
 
-简历文件：/Users/你的用户名/resume/resume-cn.pdf
-目标职位描述：<粘贴职位描述>
-
-请分析 ATS 可读性、关键词覆盖、缺失关键词和格式风险，给出修改建议，不要覆盖原文件。
+目标职位描述在下面。请告诉我哪些关键词缺了、格式哪里可能被识别错，先给建议，不要改原文件。
+<粘贴职位描述>
 ```
 
 ### Bullet 改写
 
 ```text
-请使用 ./skills/resume-bullet-writer/SKILL.md。
-
-把下面的经历改写成适合技术简历的成果型 bullet，保留事实，不虚构指标。
-原文：<粘贴经历>
-目标方向：Agent 平台 / 基础架构研发工程师
+这段经历写得太像工作职责了，帮我改成适合技术简历的成果型 bullet。
+目标方向是 Agent 平台 / 基础架构研发工程师，保留事实，不要虚构指标：
+<粘贴经历>
 ```
 
 ### 技术简历优化
 
 ```text
-请使用 ./skills/tech-resume-optimizer/SKILL.md。
-
-基于这份已确认的简历版本和目标岗位，审查技术技能、项目、工作经历和排序。
-先输出问题清单、建议结构和可替换文案，不要直接覆盖原文件。
+我准备投 Agent 平台 / 基础架构研发岗位，帮我按这个方向看一下简历的技能、项目、经历和排序。
+先告诉我哪里需要调整，并给出可以直接替换的文案，不要覆盖原文件。
 ```
 
 ## 飞书同步：feishu-job-sync
