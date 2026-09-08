@@ -1,0 +1,4 @@
+interface:
+  display_name: "Feishu Job Sync"
+  short_description: "Sync Obsidian job applications to a Feishu Base"
+  default_prompt: "Read the configured private Obsidian vault and sync confirmed job-application notes to the user's Feishu Base. Preview first, upsert by company, department, and position, preserve Obsidian as the source of truth, and never expose Base tokens."

@@ -48,6 +48,7 @@ class PackageHygieneTests(unittest.TestCase):
             {path.name for path in skill_directories},
             {
                 "job-tracker",
+                "feishu-job-sync",
                 "resume-registry",
                 "resume-ats-optimizer",
                 "resume-bullet-writer",

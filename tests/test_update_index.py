@@ -90,6 +90,13 @@ class UpdateIndexTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertIn("records=0", result.stdout)
 
+    def test_update_index_renders_confirmed_application_with_empty_department(self):
+        self.write_application("待补部门.md", "腾讯", "", "Agent 开发工程师", "screening")
+        result = self.run_update_index()
+        self.assertEqual(result.returncode, 0, result.stderr)
+        content = self.overview.read_text(encoding="utf-8")
+        self.assertIn("| 腾讯 |  | Agent 开发工程师 | 筛选中 |", content)
+
     def test_update_index_stops_status_table_before_later_markdown_tables(self):
         config = self.vault / "求职" / "配置" / "状态.md"
         config.parent.mkdir(parents=True)

@@ -44,6 +44,6 @@ The first time a source is used, show the observed raw statuses and ask the user
 
 ## Scan Outcomes
 
-Known mappings plus a unique normalized company/department/position match may update an existing application. New records, missing fields, unknown raw statuses, ambiguous matches, and cross-source possible duplicates become pending items. An unknown raw status leaves the existing canonical status unchanged.
+Known mappings plus a unique normalized company/department/position match may update an existing application. New unconfirmed records, unknown raw statuses, ambiguous matches, and cross-source possible duplicates become pending items. A user-confirmed application may keep a missing field empty and remain visible in the overview, but it is not eligible for automatic deduplication until the identity tuple is complete. An unknown raw status leaves the existing canonical status unchanged.
 
 Report automatic updates, unchanged records, new pending records, unknown statuses, possible duplicates, and failures after every scan.

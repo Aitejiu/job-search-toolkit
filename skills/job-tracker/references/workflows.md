@@ -10,7 +10,7 @@ All workflows operate against the configured private vault and keep uncertainty 
 4. Normalize the company, department, and position and check the first-release deduplication key.
 5. Show the proposed operation: create, update, append an event, create pending, or suggest a duplicate.
 6. Require an independent confirm, edit, reject, merge, split, or ignore decision for each record. A batch display never turns into a batch write without per-record decisions.
-7. After confirmation, write the application note or pending item, append a new timeline event when its fingerprint is new, and rebuild `求职/投递总览.md`.
+7. After confirmation, write the application note or pending item, append a new timeline event when its fingerprint is new, and rebuild `求职/投递总览.md`. A confirmed application with an unknown field is written as an application note with an explicit empty value; it remains visible in the overview and waits for a complete identity tuple before automatic deduplication.
 
 A public job detail page proves only that a job exists. It creates a candidate or `new_application` pending item; it cannot prove that the user submitted an application. A pasted link must not be written as an application until the key fields and target operation are confirmed.
 
@@ -20,7 +20,7 @@ A public job detail page proves only that a job exists. It creates a candidate o
 2. Read the available `agent-browser` skill instructions immediately before website interaction, then use only the user's authorized browser session.
 3. Read each configured source adapter and collect a list of snapshots. Process every row or card on a multi-application page independently.
 4. Apply the source-specific raw-status mapping. If no mapping exists, pause only the affected snapshot as `unknown_status` and preserve the existing canonical status.
-5. Match a snapshot by the normalized company, department, and position triple. A unique same-source match may update automatically; new or ambiguous records become pending.
+5. Match a snapshot by the normalized company, department, and position triple when all three values are present. A unique same-source match may update automatically; new or ambiguous records become pending until the user confirms them. A confirmed incomplete application can be written with empty fields and shown in the overview, but it cannot be automatically deduplicated.
 6. Append a timeline event only when the event fingerprint is new. Do not infer rejection, withdrawal, or closure from an absent row.
 7. Rebuild the overview and report automatic updates, unchanged records, new pending records, unknown statuses, possible duplicates, and failures.
 

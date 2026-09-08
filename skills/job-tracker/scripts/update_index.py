@@ -42,6 +42,7 @@ DEFAULT_STATUS_GROUPS = {
     "closed": "已结束",
 }
 REQUIRED_FIELDS = ("company", "department", "position", "status", "last_updated_at")
+NON_EMPTY_REQUIRED_FIELDS = ("company", "position", "status", "last_updated_at")
 TABLE_COLUMNS = (
     "公司",
     "部门",
@@ -147,10 +148,18 @@ def collect_applications(
         missing = [
             field
             for field in REQUIRED_FIELDS
-            if not isinstance(fields.get(field), str) or not str(fields.get(field)).strip()
+            if not isinstance(fields.get(field), str)
         ]
         if missing:
             errors.append(f"{path.name}: missing required fields: {', '.join(missing)}")
+            continue
+        empty = [
+            field
+            for field in NON_EMPTY_REQUIRED_FIELDS
+            if not fields[field].strip()
+        ]
+        if empty:
+            errors.append(f"{path.name}: empty required fields: {', '.join(empty)}")
             continue
         fields["_path"] = path
         records.append(fields)

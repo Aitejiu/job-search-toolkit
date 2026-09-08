@@ -28,7 +28,7 @@ Every application note has YAML frontmatter with these fields:
 | --- | --- | --- |
 | `type` | yes | Must be `application`. |
 | `company` | yes | Company name as confirmed by the user. |
-| `department` | yes | Department or team; use an explicit empty value only while the record is pending. |
+| `department` | yes | Department or team; use an explicit empty value when the application is confirmed but the source has not provided a department yet. |
 | `position` | yes | Position title as confirmed by the user. |
 | `status` | yes | Canonical internal status ID. |
 | `first_applied_at` | recommended | Date of the first confirmed submission. |
@@ -50,7 +50,7 @@ The first-release deduplication key is:
 (normalize(company), normalize(department), normalize(position))
 ```
 
-Normalization applies Unicode NFKC, trims and collapses whitespace, case-folds Latin text, and removes punctuation while preserving Chinese characters. If any component is empty, the key is unavailable and the record must be pending instead of silently merged.
+Normalization applies Unicode NFKC, trims and collapses whitespace, case-folds Latin text, and removes punctuation while preserving Chinese characters. If any component is empty, the key is unavailable for automatic deduplication; a user-confirmed application may still be stored and shown with an empty field, but it must not be silently merged until the key is complete.
 
 A same-source observation with the same key updates the existing note and appends only a new event when its event fingerprint is new. A cross-source match is only a possible duplicate until the user chooses merge or split. A confirmed reapplication can create a separate note after the user confirms the split.
 

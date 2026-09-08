@@ -23,3 +23,5 @@ source_urls: ["https://example.invalid/application/123"]
 - source_url: https://example.invalid/application/123
 - evidence: 用户确认已提交申请
 - event_fingerprint: 由系统根据来源和事件字段生成
+
+如果已确认投递但某个字段尚未知道，保留该 frontmatter 字段并使用空值，同时在 `## Missing Fields` 中列出。索引会将空字段渲染为空白单元格；在身份三元组补全前，不得自动去重。
